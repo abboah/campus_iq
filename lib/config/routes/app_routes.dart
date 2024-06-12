@@ -1,3 +1,4 @@
+import 'package:campus_iq/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/authentication/presentation/pages/forgot_password_screen.dart';
@@ -12,6 +13,7 @@ class AppRoutes {
       SignInScreen.routeName: (context) => const SignInScreen(),
       OTPScreen.routeName: (context) => const OTPScreen(),
       ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
+      OnboardingScreen.routeName: (context) => const OnboardingScreen(),
     };
   }
 }

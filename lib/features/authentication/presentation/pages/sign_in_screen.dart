@@ -1,5 +1,7 @@
+import 'package:campus_iq/features/authentication/presentation/providers/auth_providers.dart';
+import 'package:campus_iq/features/home_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/themes/extra_colors.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_textfield.dart';
@@ -7,21 +9,20 @@ import '../widgets/google_auth_button.dart';
 import 'forgot_password_screen.dart';
 import 'sign_up_screen.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends ConsumerWidget {
   static const routeName = 'sign_in';
-  const SignInScreen({super.key});
+  final TextEditingController userNameOrEmailController =
+      TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final login = ref.watch(loginProvider);
     Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+
     return Container(
       height: size.height,
       width: size.width,
@@ -39,7 +40,7 @@ class _SignInScreenState extends State<SignInScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back_ios_new),
-            color: ExtraColors.white,
+            color: ExtraColors.black,
           ),
         ),
         body: Padding(
@@ -51,12 +52,12 @@ class _SignInScreenState extends State<SignInScreen> {
               Text(
                 "Welcome",
                 style:
-                    textTheme.displayMedium!.copyWith(color: ExtraColors.white),
+                    textTheme.displayMedium!.copyWith(color: ExtraColors.black),
               ),
               Text(
                 "Back",
                 style:
-                    textTheme.displayMedium!.copyWith(color: ExtraColors.white),
+                    textTheme.displayMedium!.copyWith(color: ExtraColors.black),
               ),
               const SizedBox(
                 height: 30,
@@ -64,7 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
               AuthTextField(
                 label: 'Email',
                 textTheme: textTheme,
-                controller: emailController,
+                controller: userNameOrEmailController,
                 obscuretext: false,
               ),
               AuthTextField(
@@ -75,15 +76,26 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               AuthButton(
                   textTheme: textTheme,
-                  onPressed: () {},
-                  backgroundColor: ExtraColors.blue,
+                  onPressed: () async {
+                    try {
+                      final user = await login(userNameOrEmailController.text,
+                          passwordController.text);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Login successful: ${user.userName}')));
+                      Navigator.pushNamed(context, HomeScreen.routeName);
+                    } catch (error) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Error: ${error.toString()}')));
+                      // Handle error
+                    }
+                  },
                   textColor: ExtraColors.white,
                   text: 'Sign In'),
               Row(
                 children: <Widget>[
                   Expanded(
                     child: Divider(
-                      color: ExtraColors.white.withOpacity(0.5),
+                      color: ExtraColors.black.withOpacity(0.5),
                       thickness: 1.0,
                     ),
                   ),
@@ -92,12 +104,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       'or',
                       style: textTheme.bodyMedium!
-                          .copyWith(color: ExtraColors.white),
+                          .copyWith(color: ExtraColors.black),
                     ),
                   ),
                   Expanded(
                     child: Divider(
-                      color: ExtraColors.white.withOpacity(0.5),
+                      color: ExtraColors.black.withOpacity(0.5),
                       thickness: 1.0,
                     ),
                   ),
@@ -106,8 +118,8 @@ class _SignInScreenState extends State<SignInScreen> {
               GoogleAuthButton(
                   textTheme: textTheme,
                   onPressed: () {},
-                  backgroundColor: ExtraColors.white.withOpacity(0.1),
-                  textColor: ExtraColors.white,
+                  backgroundColor: ExtraColors.black.withOpacity(0.1),
+                  textColor: ExtraColors.black,
                   text: 'Sign In with Google'),
               const SizedBox(
                 height: 60,
@@ -122,7 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       'Sign Up',
                       style: textTheme.bodyLarge!
-                          .copyWith(color: ExtraColors.white),
+                          .copyWith(color: ExtraColors.black),
                     ),
                   ),
                   TextButton(
@@ -133,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       'Forgot Password',
                       style: textTheme.bodyLarge!
-                          .copyWith(color: ExtraColors.white),
+                          .copyWith(color: ExtraColors.black),
                     ),
                   ),
                 ],

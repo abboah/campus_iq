@@ -3,9 +3,10 @@ import 'package:campus_iq/core/themes/theme.dart';
 import 'package:campus_iq/features/authentication/presentation/pages/sign_in_screen.dart';
 import 'package:campus_iq/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: lightTheme,
-      home: const OnboardingScreen(),
+      home: SignInScreen(),
       debugShowCheckedModeBanner: false,
       routes: AppRoutes.getRoutes(),
     );

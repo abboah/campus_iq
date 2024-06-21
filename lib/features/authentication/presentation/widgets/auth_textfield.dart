@@ -20,12 +20,12 @@ class AuthTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style: textTheme.bodyLarge!.copyWith(color: ExtraColors.white),
+      style: textTheme.bodyLarge!.copyWith(color: ExtraColors.black),
       obscureText: obscuretext,
       decoration: InputDecoration(
         label: Text(
           label,
-          style: textTheme.bodyMedium!.copyWith(color: ExtraColors.white),
+          style: textTheme.bodyMedium!.copyWith(color: ExtraColors.black),
         ),
       ),
     );

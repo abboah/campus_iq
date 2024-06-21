@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:campus_iq/core/themes/extra_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
@@ -5,7 +8,6 @@ class AuthButton extends StatelessWidget {
     super.key,
     required this.textTheme,
     required this.onPressed,
-    required this.backgroundColor,
     required this.textColor,
     required this.text,
     this.image,
@@ -14,7 +16,6 @@ class AuthButton extends StatelessWidget {
   final TextTheme textTheme;
   final String text;
   final VoidCallback onPressed;
-  final Color backgroundColor;
   final Color textColor;
   final String? image;
 
@@ -22,17 +23,23 @@ class AuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: FilledButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            backgroundColor: backgroundColor),
-        child: Text(
-          text,
-          style: textTheme.titleLarge?.copyWith(color: textColor, fontSize: 17),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: const LinearGradient(colors: [
+              Color.fromARGB(255, 31, 107, 255),
+              Color.fromARGB(153, 195, 37, 255)
+            ])),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 50),
+              backgroundColor: ExtraColors.transparent),
+          child: Text(
+            text,
+            style:
+                textTheme.titleLarge?.copyWith(color: textColor, fontSize: 17),
+          ),
         ),
       ),
     );

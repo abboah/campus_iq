@@ -86,6 +86,7 @@ class SignInScreen extends ConsumerWidget {
                     } catch (error) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('Error: ${error.toString()}')));
+                      print(Text('Error: ${error.toString()}'));
                       // Handle error
                     }
                   },

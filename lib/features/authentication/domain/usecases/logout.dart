@@ -1,11 +1,18 @@
-import 'package:campus_iq/features/authentication/domain/repositories/auth_repository.dart';
+// domain/usecases/logout_use_case.dart
+import 'package:dartz/dartz.dart';
 
-class Logout {
-  final AuthRepository authRepository;
+import '../../../../core/errors/failures.dart';
+import '../../../../core/errors/usecases/no_params.dart';
+import '../../../../core/errors/usecases/use_case.dart';
+import '../repositories/auth_repository.dart';
 
-  Logout(this.authRepository);
+class Logout implements UseCase<void, NoParams> {
+  final AuthRepository repository;
 
-  Future<void> call() async {
-    await authRepository.clearToken();
+  Logout(this.repository);
+
+  @override
+  Future<Either<Failure, void>> call(NoParams params) async {
+    return await repository.logout();
   }
 }

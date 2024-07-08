@@ -68,6 +68,7 @@ class SignUpScreen extends ConsumerWidget {
                 onPressed: () async {
                   // Navigator.pushNamed(context, OTPScreen.routeName);
                   try {
+                    CircularProgressIndicator();
                     final message = await signup(nameController.text,
                         emailController.text, passwordController.text);
                     ScaffoldMessenger.of(context).showSnackBar(

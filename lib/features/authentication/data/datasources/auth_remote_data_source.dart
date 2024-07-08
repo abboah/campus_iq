@@ -1,7 +1,6 @@
 // lib/data/datasources/auth_remote_data_source.dart
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import '../models/user_model.dart';
 
 class AuthRemoteDataSource {
@@ -11,8 +10,10 @@ class AuthRemoteDataSource {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login'),
       headers: {'Content-Type': 'application/json'},
-      body:
-          jsonEncode({'userName/email': userNameOrEmail, 'password': password}),
+      body: jsonEncode({
+        'userName/email': userNameOrEmail,
+        'password': password,
+      }),
     );
 
     if (response.statusCode == 200) {

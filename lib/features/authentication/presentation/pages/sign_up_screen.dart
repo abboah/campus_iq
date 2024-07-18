@@ -1,26 +1,56 @@
-import 'package:campus_iq/features/authentication/presentation/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../core/themes/extra_colors.dart';
 import '../../../home_screen.dart';
+import '../providers/auth_providers.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_textfield.dart';
 import '../widgets/google_auth_button.dart';
-import 'otp_screen.dart';
 import 'sign_in_screen.dart';
 
-class SignUpScreen extends ConsumerWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   static const routeName = 'sign_up';
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final signup = ref.watch(signupProvider);
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  void signUp() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final signUp = ref.watch(signupProvider);
+      await signUp(
+          nameController.text, emailController.text, passwordController.text);
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Sign up successful!')));
+      Navigator.pushNamed(context, HomeScreen.routeName);
+      // Navigate to another screen if needed
+    } catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: ${error.toString()}')));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
     Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
 
@@ -65,22 +95,9 @@ class SignUpScreen extends ConsumerWidget {
             ),
             AuthButton(
                 textTheme: textTheme,
-                onPressed: () async {
-                  // Navigator.pushNamed(context, OTPScreen.routeName);
-                  try {
-                    CircularProgressIndicator();
-                    final message = await signup(nameController.text,
-                        emailController.text, passwordController.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Sign Up successful')));
-                    Navigator.pushNamed(context, HomeScreen.routeName);
-                  } catch (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error: ${error.toString()}')));
-                    // Handle error
-                  }
-                },
+                onPressed: signUp,
                 textColor: ExtraColors.white,
+                isLoading: isLoading,
                 text: 'Sign Up'),
             Row(
               children: <Widget>[

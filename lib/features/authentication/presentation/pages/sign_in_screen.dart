@@ -9,17 +9,56 @@ import '../widgets/google_auth_button.dart';
 import 'forgot_password_screen.dart';
 import 'sign_up_screen.dart';
 
-class SignInScreen extends ConsumerWidget {
+class SignInScreen extends ConsumerStatefulWidget {
   static const routeName = 'sign_in';
+
+  const SignInScreen({super.key});
+
+  @override
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends ConsumerState<SignInScreen> {
   final TextEditingController userNameOrEmailController =
       TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
 
-  SignInScreen({super.key});
+  void login() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final login = ref.watch(loginProvider);
+    final input = userNameOrEmailController.text;
+    final password = passwordController.text;
+    try {
+      final isInputEmail = isEmail(input);
+      final user = await login(input, password, isInputEmail);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login successful: ${user.userName}')));
+      Navigator.pushNamed(context, HomeScreen.routeName);
+    } catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: ${error.toString()}')));
+      print(Text('Error: ${error.toString()}'));
+      // Handle error
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  bool isEmail(String input) {
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegex.hasMatch(input);
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final login = ref.watch(loginProvider);
+  Widget build(
+    BuildContext context,
+  ) {
     Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
 
@@ -76,21 +115,9 @@ class SignInScreen extends ConsumerWidget {
               ),
               AuthButton(
                   textTheme: textTheme,
-                  onPressed: () async {
-                    try {
-                      final user = await login(userNameOrEmailController.text,
-                          passwordController.text);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Login successful: ${user.userName}')));
-                      Navigator.pushNamed(context, HomeScreen.routeName);
-                    } catch (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Error: ${error.toString()}')));
-                      print(Text('Error: ${error.toString()}'));
-                      // Handle error
-                    }
-                  },
+                  onPressed: login,
                   textColor: ExtraColors.white,
+                  isLoading: isLoading,
                   text: 'Sign In'),
               Row(
                 children: <Widget>[

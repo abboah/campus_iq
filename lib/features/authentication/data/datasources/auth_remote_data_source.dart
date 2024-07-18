@@ -6,12 +6,13 @@ import '../models/user_model.dart';
 class AuthRemoteDataSource {
   static const String baseUrl = 'https://itirena-backend.onrender.com/api/v1';
 
-  Future<UserModel> login(String userNameOrEmail, String password) async {
+  Future<UserModel> login(String userNameOrEmail, String password,
+      {required bool isEmail}) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'userName/email': userNameOrEmail,
+        isEmail ? 'email' : 'username': userNameOrEmail,
         'password': password,
       }),
     );

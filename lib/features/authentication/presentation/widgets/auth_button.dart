@@ -11,6 +11,7 @@ class AuthButton extends StatelessWidget {
     required this.textColor,
     required this.text,
     this.image,
+    this.isLoading = false,
   });
 
   final TextTheme textTheme;
@@ -18,6 +19,7 @@ class AuthButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color textColor;
   final String? image;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +33,19 @@ class AuthButton extends StatelessWidget {
               Color.fromARGB(153, 195, 37, 255)
             ])),
         child: ElevatedButton(
-          onPressed: onPressed,
+          onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
               backgroundColor: ExtraColors.transparent),
-          child: Text(
-            text,
-            style:
-                textTheme.titleLarge?.copyWith(color: textColor, fontSize: 17),
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(ExtraColors.white),
+                )
+              : Text(
+                  text,
+                  style: textTheme.titleLarge
+                      ?.copyWith(color: textColor, fontSize: 17),
+                ),
         ),
       ),
     );

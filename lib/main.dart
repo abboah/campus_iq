@@ -1,5 +1,6 @@
 import 'package:campus_iq/config/routes/app_routes.dart';
 import 'package:campus_iq/core/themes/theme.dart';
+import 'package:campus_iq/features/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,7 +69,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: ThemeMode.system,
-        home: const UploadScanScreen(),
+        home: const HomeScreen(),
         routes: AppRoutes.getRoutes(),
       ),
     );

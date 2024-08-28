@@ -52,7 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SignUpScreen()),
+        MaterialPageRoute(builder: (context) => const SignUpScreen()),
       );
     }
   }

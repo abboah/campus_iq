@@ -2,8 +2,6 @@
 import 'package:campus_iq/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/authentication/data/datasources/auth_local_data_source.dart';
-import '../../../features/authentication/data/repositories/auth_repository_impl.dart';
-import '../../../features/authentication/domain/repositories/auth_repository.dart';
 import '../../../features/authentication/domain/usecases/logout.dart';
 import '../../../features/authentication/presentation/providers/auth_providers.dart';
 

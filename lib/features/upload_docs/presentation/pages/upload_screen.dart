@@ -283,7 +283,7 @@ class TButton extends StatelessWidget {
                   color: isLightTheme ? ExtraColors.black : ExtraColors.white,
                   fontSize: 17),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Icon(

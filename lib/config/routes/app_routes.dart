@@ -10,12 +10,12 @@ import '../../features/authentication/presentation/pages/sign_up_screen.dart';
 class AppRoutes {
   static Map<String, WidgetBuilder> getRoutes() {
     return {
-      SignUpScreen.routeName: (context) => SignUpScreen(),
-      SignInScreen.routeName: (context) => SignInScreen(),
-      OTPScreen.routeName: (context) => OTPScreen(),
+      SignUpScreen.routeName: (context) => const SignUpScreen(),
+      SignInScreen.routeName: (context) => const SignInScreen(),
+      OTPScreen.routeName: (context) => const OTPScreen(),
       ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
       OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-      HomeScreen.routeName: (context) => HomeScreen()
+      HomeScreen.routeName: (context) => const HomeScreen()
     };
   }
 }

@@ -1,6 +1,5 @@
 // lib/data/repositories/auth_repository_impl.dart
 import 'package:campus_iq/features/authentication/data/datasources/auth_local_data_source.dart';
-import 'package:flutter/material.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/user.dart';
@@ -43,7 +42,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> logout() async {
     try {
       await localDataSource.clearToken();
-      return Right(null);
+      return const Right(null);
     } catch (exception) {
       return Left(LocalFailure());
     }

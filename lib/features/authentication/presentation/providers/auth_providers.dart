@@ -1,5 +1,4 @@
 import 'package:campus_iq/core/errors/usecases/use_case_provider.dart';
-import 'package:campus_iq/features/authentication/domain/usecases/logout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/datasources/auth_remote_data_source.dart';
 import '../../data/repositories/auth_repository_impl.dart';

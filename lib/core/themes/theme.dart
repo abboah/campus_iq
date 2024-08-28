@@ -8,7 +8,7 @@ ThemeData lightTheme = ThemeData(
     primaryColor: const Color(0x002c74b3),
 
     // textTheme: GoogleFonts.robotoTextTheme(),
-    colorScheme: ColorScheme.light(primary: ExtraColors.white));
+    colorScheme: const ColorScheme.light(primary: ExtraColors.white));
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
@@ -16,5 +16,5 @@ ThemeData darkTheme = ThemeData(
   useMaterial3: true,
   primaryColor: const Color(0x002c74b3),
   // textTheme: GoogleFonts.robotoTextTheme(),
-  colorScheme: ColorScheme.dark(primary: ExtraColors.black),
+  colorScheme: const ColorScheme.dark(primary: ExtraColors.black),
 );

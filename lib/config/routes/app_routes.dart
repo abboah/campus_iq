@@ -1,5 +1,7 @@
 import 'package:campus_iq/features/home_screen.dart';
+import 'package:campus_iq/features/notification/notification_screen.dart';
 import 'package:campus_iq/features/onboarding/presentation/pages/onboarding_screen.dart';
+import 'package:campus_iq/features/upload_docs/presentation/pages/upload_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/authentication/presentation/pages/forgot_password_screen.dart';
@@ -15,7 +17,9 @@ class AppRoutes {
       OTPScreen.routeName: (context) => const OTPScreen(),
       ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
       OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-      HomeScreen.routeName: (context) => const HomeScreen()
+      HomeScreen.routeName: (context) => const HomeScreen(),
+      UploadScanScreen.routeName: (conext) => const UploadScanScreen(),
+      NotificationScreen.routeName: (context) => const NotificationScreen(),
     };
   }
 }

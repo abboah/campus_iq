@@ -32,6 +32,11 @@ class MainDrawer extends StatelessWidget {
               icon: const Icon(IconlyLight.category)),
         ),
         ListTile(
+          leading:
+              IconButton(onPressed: () {}, icon: const Icon(IconlyLight.home)),
+          title: const Text('Home'),
+        ),
+        ListTile(
           leading: IconButton(
               onPressed: () {}, icon: const Icon(IconlyLight.time_circle)),
           title: const Text('Personal Schedule'),

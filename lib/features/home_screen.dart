@@ -1,6 +1,7 @@
 import 'package:campus_iq/core/errors/usecases/use_case_provider.dart';
 import 'package:campus_iq/core/themes/extra_colors.dart';
 import 'package:campus_iq/courses_tab_widget.dart';
+import 'package:campus_iq/features/notification/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconly/iconly.dart';
@@ -14,8 +15,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<ScaffoldState> scaffoldKey =
-        GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     final TextTheme textTheme = Theme.of(context).textTheme;
     final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
     final logout = ref.watch(logoutUseCaseProvider);
@@ -41,6 +41,16 @@ class HomeScreen extends ConsumerWidget {
           ),
           forceMaterialTransparency: false,
           actions: <Widget>[
+            IconButton(
+              hoverColor: ExtraColors.transparent,
+              highlightColor: ExtraColors.transparent,
+              onPressed: () {
+                //Notification Screen
+                Navigator.of(context).pushNamed(NotificationScreen.routeName);
+              },
+              icon: Icon(IconlyLight.notification,
+                  color: isLightTheme ? ExtraColors.black : ExtraColors.white),
+            ),
             IconButton(
               padding: const EdgeInsets.only(right: 20.0),
               hoverColor: ExtraColors.transparent,

@@ -9,6 +9,7 @@ import '../../../../core/themes/extra_colors.dart';
 import '../../../../core/widgets/gradient_textbutton.dart';
 
 class UploadScanScreen extends StatefulWidget {
+  static const routeName = '/uploaddocs';
   const UploadScanScreen({super.key});
 
   @override

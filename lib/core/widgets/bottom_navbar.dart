@@ -30,18 +30,23 @@ class BottomNavBarFb2 extends StatelessWidget {
                   selected: true,
                   onPressed: () {}),
               IconBottomBar(
-                  text: "Course Materials",
-                  icon: IconlyBold.search,
+                  text: "Materials",
+                  icon: IconlyBold.discovery,
                   selected: false,
                   onPressed: () {}),
               IconBottomBar(
                   text: "Navigation",
-                  icon: IconlyBold.graph,
+                  icon: IconlyBold.location,
+                  selected: false,
+                  onPressed: () {}),
+              IconBottomBar(
+                  text: "Q & A",
+                  icon: IconlyBold.chat,
                   selected: false,
                   onPressed: () {}),
               IconBottomBar(
                   text: "Customisation",
-                  icon: IconlyBold.setting,
+                  icon: IconlyBold.edit,
                   selected: false,
                   onPressed: () {}),
             ],

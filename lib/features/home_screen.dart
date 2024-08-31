@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconly/iconly.dart';
 
+import '../core/widgets/bottom_navbar.dart';
 import '../core/widgets/drawer.dart';
 import '../schedule_widget.dart';
 
@@ -22,44 +23,34 @@ class HomeScreen extends ConsumerWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        // bottomNavigationBar: const BottomNavBarFb2(),
-        endDrawer: Drawer(
-            width: MediaQuery.of(context).size.width / 1.5,
-            child: const MainDrawer()),
-        key: scaffoldKey,
+        bottomNavigationBar: const BottomNavBarFb2(),
+        // endDrawer: Drawer(
+        //     width: MediaQuery.of(context).size.width / 1.5,
+        //     child: const MainDrawer()),
+        // key: scaffoldKey,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: ExtraColors.transparent,
-          toolbarHeight: 80,
           automaticallyImplyLeading: false,
-          title: const Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: CircleAvatar(
-              radius: 35,
-              backgroundImage: AssetImage('assets/images/Profile image.png'),
-            ),
+          leading: IconButton(
+            hoverColor: ExtraColors.transparent,
+            highlightColor: ExtraColors.transparent,
+            onPressed: () {
+              //Notification Screen
+              Navigator.of(context).pushNamed(NotificationScreen.routeName);
+            },
+            icon: Icon(IconlyLight.notification,
+                size: 30,
+                color: isLightTheme ? ExtraColors.black : ExtraColors.white),
           ),
           forceMaterialTransparency: false,
           actions: <Widget>[
-            IconButton(
-              hoverColor: ExtraColors.transparent,
-              highlightColor: ExtraColors.transparent,
-              onPressed: () {
-                //Notification Screen
-                Navigator.of(context).pushNamed(NotificationScreen.routeName);
-              },
-              icon: Icon(IconlyLight.notification,
-                  color: isLightTheme ? ExtraColors.black : ExtraColors.white),
-            ),
-            IconButton(
+            Padding(
               padding: const EdgeInsets.only(right: 20.0),
-              hoverColor: ExtraColors.transparent,
-              highlightColor: ExtraColors.transparent,
-              onPressed: () {
-                scaffoldKey.currentState!.openEndDrawer();
-              },
-              icon: Icon(IconlyLight.category,
-                  color: isLightTheme ? ExtraColors.black : ExtraColors.white),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundImage: AssetImage('assets/images/Profile image.png'),
+              ),
             ),
           ],
         ),
@@ -87,66 +78,17 @@ class HomeScreen extends ConsumerWidget {
         //           )),
         // ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Hello, ',
-                      style: textTheme.headlineMedium!.copyWith(
-                          color: isLightTheme
-                              ? ExtraColors.black
-                              : ExtraColors.white),
-                    ),
-                    TextSpan(
-                      text: 'John',
-                      style: textTheme.headlineLarge!.copyWith(
-                          color: isLightTheme
-                              ? ExtraColors.black
-                              : ExtraColors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              TabBar(
-                tabs: const [
-                  Tab(
-                    text: 'Schedule',
-                  ),
-                  Tab(
-                    text: 'Courses',
-                  ),
-                ],
-                labelStyle: textTheme.bodyLarge,
-                unselectedLabelColor:
-                    isLightTheme ? ExtraColors.black : ExtraColors.white,
-                labelColor:
-                    isLightTheme ? ExtraColors.black : ExtraColors.white,
-                indicatorColor: ExtraColors.buttonOutline,
-                dividerColor: ExtraColors.transparent,
-              ),
               Expanded(
-                  child: TabBarView(children: [
-                // ScheduleTab(),
-                Container(
+                child: Container(
                     child: TableEventsExample(
                   color: isLightTheme ? ExtraColors.black : ExtraColors.white,
                 )),
-                // CoursesTab(),
-                Container(
-                    child: CoursesTabWidget(
-                  color: isLightTheme ? ExtraColors.black : ExtraColors.white,
-                  textStyle: textTheme.bodyLarge?.copyWith(fontSize: 18),
-                )),
-              ]))
+              ),
             ],
           ),
         ),

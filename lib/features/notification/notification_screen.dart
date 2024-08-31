@@ -1,4 +1,5 @@
 import 'package:campus_iq/core/themes/extra_colors.dart';
+import 'package:campus_iq/core/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -14,9 +15,10 @@ class NotificationScreen extends StatelessWidget {
     final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
-        endDrawer: Drawer(
-            width: MediaQuery.of(context).size.width / 1.5,
-            child: const MainDrawer()),
+        // endDrawer: Drawer(
+        //     width: MediaQuery.of(context).size.width / 1.5,
+        //     child: const MainDrawer()),
+        bottomNavigationBar: const BottomNavBarFb2(),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -25,20 +27,20 @@ class NotificationScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios_new),
           ),
           backgroundColor: ExtraColors.transparent,
-          actions: [
-            IconButton(
-              padding: const EdgeInsets.only(right: 20.0),
-              hoverColor: ExtraColors.transparent,
-              highlightColor: ExtraColors.transparent,
-              onPressed: () {
-                scaffoldKey.currentState!.openEndDrawer();
-              },
-              icon: Icon(IconlyLight.category,
-                  color: isLightTheme ? ExtraColors.black : ExtraColors.white),
-            ),
+          actions: const [
+            // IconButton(
+            //   padding: const EdgeInsets.only(right: 20.0),
+            //   hoverColor: ExtraColors.transparent,
+            //   highlightColor: ExtraColors.transparent,
+            //   onPressed: () {
+            //     scaffoldKey.currentState!.openEndDrawer();
+            //   },
+            //   icon: Icon(IconlyLight.category,
+            //       color: isLightTheme ? ExtraColors.black : ExtraColors.white),
+            // ),
           ],
         ),
-        key: scaffoldKey,
+        // key: scaffoldKey,
         body: Container());
   }
 }

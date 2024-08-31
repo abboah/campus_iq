@@ -30,25 +30,20 @@ class BottomNavBarFb2 extends StatelessWidget {
                   selected: true,
                   onPressed: () {}),
               IconBottomBar(
-                  text: "Search",
+                  text: "Course Materials",
                   icon: IconlyBold.search,
                   selected: false,
                   onPressed: () {}),
               IconBottomBar(
-                  text: "AI Chat",
+                  text: "Navigation",
                   icon: IconlyBold.graph,
                   selected: false,
                   onPressed: () {}),
               IconBottomBar(
-                  text: "Settings",
+                  text: "Customisation",
                   icon: IconlyBold.setting,
                   selected: false,
                   onPressed: () {}),
-              IconBottomBar(
-                  text: "Profile",
-                  icon: IconlyBold.profile,
-                  selected: false,
-                  onPressed: () {})
             ],
           ),
         ),
@@ -69,7 +64,8 @@ class IconBottomBar extends StatelessWidget {
   final bool selected;
   final Function() onPressed;
 
-  final primaryColor = const Color(0xff4338CA);
+  // final primaryColor = const Color(0xff4338CA);
+  final primaryColor = Colors.blue;
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,6 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
-
-import 'package:campus_iq/core/themes/extra_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:campus_iq/core/themes/extra_colors.dart';
+import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -20,8 +18,7 @@ class TableEventsExample extends StatefulWidget {
 class _TableEventsExampleState extends State<TableEventsExample> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOff; // Can be toggled on/off by longpressing a date
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   DateTime? _rangeStart;
@@ -45,17 +42,30 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   }
 
   List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
     return kEvents[day] ?? [];
   }
 
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
-    // Implementation example
     final days = daysInRange(start, end);
-
     return [
       for (final d in days) ..._getEventsForDay(d),
     ];
+  }
+
+  String getAcademicYear(DateTime date) {
+    int year = date.year;
+    int academicStartYear;
+    int academicEndYear;
+
+    if (date.month >= 1 && date.month <= 8) {
+      academicStartYear = year - 1;
+      academicEndYear = year;
+    } else {
+      academicStartYear = year;
+      academicEndYear = year + 1;
+    }
+
+    return "$academicStartYear/$academicEndYear";
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -63,7 +73,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        _rangeStart = null; // Important to clean those
+        _rangeStart = null;
         _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
@@ -81,7 +91,6 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       _rangeSelectionMode = RangeSelectionMode.toggledOn;
     });
 
-    // `start` or `end` could be null
     if (start != null && end != null) {
       _selectedEvents.value = _getEventsForRange(start, end);
     } else if (start != null) {
@@ -94,19 +103,31 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   @override
   Widget build(BuildContext context) {
     final String dayName = DateFormat('EEEE').format(_focusedDay);
+    final String academicYear = getAcademicYear(_focusedDay);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ExtraColors.transparent,
-        title: Text(
-          dayName,
-          style: Theme.of(context)
-              .textTheme
-              .displaySmall
-              ?.copyWith(fontWeight: FontWeight.w500),
-        ),
+        actions: [
+          Text(
+            academicYear,
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall
+                ?.copyWith(fontWeight: FontWeight.w500, fontSize: 30),
+          ),
+        ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            dayName,
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall
+                ?.copyWith(fontWeight: FontWeight.w500),
+          ),
           TableCalendar<Event>(
             firstDay: kFirstDay,
             lastDay: kLastDay,
@@ -119,7 +140,6 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
             calendarStyle: const CalendarStyle(
-                // Use `CalendarStyle` to customize the UI
                 outsideDaysVisible: false,
                 selectedDecoration: BoxDecoration(
                     color: ExtraColors.buttonOutline, shape: BoxShape.circle),
@@ -135,7 +155,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               }
             },
             onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
+              setState(() {
+                _focusedDay = focusedDay;
+              });
             },
           ),
           const SizedBox(height: 8.0),
@@ -143,18 +165,44 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
+                if (value.isEmpty) {
+                  return const Center(
+                    child: Text("No events for this day"),
+                  );
+                }
+
                 return ListView.builder(
                   itemCount: value.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: color),
+                    final event = value[index];
+                    return Card(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                      ),
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ListTile(
-                        onTap: () => print('${value[index]}'),
-                        title: Text('${value[index]}'),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 16.0),
+                        leading: Icon(
+                          IconlyLight.document,
+                          color: color,
+                        ),
+                        title: Text(
+                          event.title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.0),
+                        ),
+                        subtitle: Text(
+                          event.description,
+                          style: const TextStyle(fontSize: 14.0),
+                        ),
+                        onTap: () {
+                          // Implement notification or event detail logic here
+                          print('${event.title} - ${event.description}');
+                        },
                       ),
                     );
                   },

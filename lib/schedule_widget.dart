@@ -8,14 +8,19 @@ import 'home_utils.dart';
 
 class TableEventsExample extends StatefulWidget {
   final Color color;
+  final VoidCallback onPressed;
 
-  const TableEventsExample({super.key, required this.color});
+  const TableEventsExample({
+    super.key,
+    required this.color,
+    required this.onPressed,
+  });
   @override
-  _TableEventsExampleState createState() =>
-      _TableEventsExampleState(color: color);
+  TableEventsExampleState createState() =>
+      TableEventsExampleState(onPressed: onPressed);
 }
 
-class _TableEventsExampleState extends State<TableEventsExample> {
+class TableEventsExampleState extends State<TableEventsExample> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
@@ -23,9 +28,10 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
-  final Color color;
+  final Color? color;
+  final VoidCallback onPressed;
 
-  _TableEventsExampleState({required this.color});
+  TableEventsExampleState({this.color, required this.onPressed});
 
   @override
   void initState() {
@@ -104,17 +110,37 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   Widget build(BuildContext context) {
     final String dayName = DateFormat('EEEE').format(_focusedDay);
     final String academicYear = getAcademicYear(_focusedDay);
+    final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 100,
+        leading: Column(
+          children: [
+            Text(
+              academicYear,
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall
+                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+            Text(
+              'ACADEMIC YEAR',
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall
+                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 10),
+            ),
+          ],
+        ),
         backgroundColor: ExtraColors.transparent,
-        actions: [
-          Text(
-            academicYear,
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall
-                ?.copyWith(fontWeight: FontWeight.w500, fontSize: 30),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: CircleAvatar(
+              radius: 25,
+              backgroundImage: AssetImage('assets/images/Profile image.png'),
+            ),
           ),
         ],
       ),
@@ -161,6 +187,18 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             },
           ),
           const SizedBox(height: 8.0),
+          ElevatedButton(
+            style: ButtonStyle(
+              elevation: const WidgetStatePropertyAll(0),
+            ),
+            onPressed: onPressed,
+            child: Text(
+              'See More',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          ),
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
@@ -201,6 +239,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                         ),
                         onTap: () {
                           // Implement notification or event detail logic here
+                          // ignore: avoid_print
                           print('${event.title} - ${event.description}');
                         },
                       ),

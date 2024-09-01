@@ -30,7 +30,7 @@ class BottomNavBarFb2 extends StatelessWidget {
                   selected: true,
                   onPressed: () {}),
               IconBottomBar(
-                  text: "Materials",
+                  text: "Course Materials",
                   icon: IconlyBold.discovery,
                   selected: false,
                   onPressed: () {}),
@@ -42,11 +42,6 @@ class BottomNavBarFb2 extends StatelessWidget {
               IconBottomBar(
                   text: "Q & A",
                   icon: IconlyBold.chat,
-                  selected: false,
-                  onPressed: () {}),
-              IconBottomBar(
-                  text: "Customisation",
-                  icon: IconlyBold.edit,
                   selected: false,
                   onPressed: () {}),
             ],

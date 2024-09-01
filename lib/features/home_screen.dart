@@ -28,32 +28,22 @@ class HomeScreen extends ConsumerWidget {
         //     width: MediaQuery.of(context).size.width / 1.5,
         //     child: const MainDrawer()),
         // key: scaffoldKey,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: ExtraColors.transparent,
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            hoverColor: ExtraColors.transparent,
-            highlightColor: ExtraColors.transparent,
-            onPressed: () {
-              //Notification Screen
-              Navigator.of(context).pushNamed(NotificationScreen.routeName);
-            },
-            icon: Icon(IconlyLight.notification,
-                size: 30,
-                color: isLightTheme ? ExtraColors.black : ExtraColors.white),
-          ),
-          forceMaterialTransparency: false,
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: CircleAvatar(
-                radius: 20,
-                backgroundImage: AssetImage('assets/images/Profile image.png'),
-              ),
-            ),
-          ],
-        ),
+        // appBar: AppBar(
+        //   elevation: 0,
+        //   backgroundColor: ExtraColors.transparent,
+        //   automaticallyImplyLeading: false,
+
+        //   forceMaterialTransparency: false,
+        //   actions: <Widget>[
+        //     Padding(
+        //       padding: const EdgeInsets.only(right: 20.0),
+        //       child: CircleAvatar(
+        //         radius: 20,
+        //         backgroundImage: AssetImage('assets/images/Profile image.png'),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         // body: Center(
         //   child:
         //       // Container(),
@@ -86,6 +76,9 @@ class HomeScreen extends ConsumerWidget {
               Expanded(
                 child: Container(
                     child: TableEventsExample(
+                  onPressed: () {
+                    Navigator.pushNamed(context, NotificationScreen.routeName);
+                  },
                   color: isLightTheme ? ExtraColors.black : ExtraColors.white,
                 )),
               ),

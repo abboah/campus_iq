@@ -16,3 +16,4 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 APK LOCATION: build/app/outputs/flutter-apk/app-release.apk 
+![Screenshot_1725173202](https://github.com/user-attachments/assets/e83bbbf6-0cdd-4566-a6ff-ead566dd79f7)

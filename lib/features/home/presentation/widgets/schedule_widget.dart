@@ -9,15 +9,17 @@ import 'home_utils.dart';
 class TableEventsExample extends StatefulWidget {
   final Color color;
   final VoidCallback onPressed;
+  final VoidCallback profileNav;
 
   const TableEventsExample({
     super.key,
     required this.color,
     required this.onPressed,
+    required this.profileNav,
   });
   @override
   TableEventsExampleState createState() =>
-      TableEventsExampleState(onPressed: onPressed);
+      TableEventsExampleState(onPressed: onPressed, profileNav: profileNav);
 }
 
 class TableEventsExampleState extends State<TableEventsExample> {
@@ -30,8 +32,10 @@ class TableEventsExampleState extends State<TableEventsExample> {
   DateTime? _rangeEnd;
   final Color? color;
   final VoidCallback onPressed;
+  final VoidCallback profileNav;
 
-  TableEventsExampleState({this.color, required this.onPressed});
+  TableEventsExampleState(
+      {this.color, required this.onPressed, required this.profileNav});
 
   @override
   void initState() {
@@ -134,12 +138,15 @@ class TableEventsExampleState extends State<TableEventsExample> {
           ],
         ),
         backgroundColor: ExtraColors.transparent,
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.only(right: 20.0),
-            child: CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage('assets/images/Profile image.png'),
+            child: InkWell(
+              onTap: profileNav,
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage: AssetImage('assets/images/Profile image.png'),
+              ),
             ),
           ),
         ],

@@ -1,10 +1,9 @@
-import 'package:campus_iq/features/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
-
+import 'package:pdfx/pdfx.dart';
 import '../../../../core/themes/extra_colors.dart';
 import '../../../../core/widgets/gradient_textbutton.dart';
 
@@ -20,17 +19,51 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
   File? _courseRegistrationFile;
   File? _timetableFile;
   final ImagePicker _picker = ImagePicker();
+  PdfDocument? _pdfDocument;
+  PdfPageImage? _pdfPageImage;
+  PdfDocument? _coursePdfDocument;
+  PdfPageImage? _coursePdfPageImage;
+  PdfDocument? _timetalePdfDocument;
+  PdfPageImage? _timetablePageImage;
 
   Future<void> _pickDocument(bool isCourseRegistration) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'jpg', 'png'],
+    );
     if (result != null) {
-      setState(() {
-        if (isCourseRegistration) {
-          _courseRegistrationFile = File(result.files.single.path!);
-        } else {
-          _timetableFile = File(result.files.single.path!);
-        }
-      });
+      final file = File(result.files.single.path!);
+      if (file.path.endsWith('.pdf')) {
+        // If the file is a PDF, render the first page as an image
+        _pdfDocument = await PdfDocument.openFile(file.path);
+        final page = await _pdfDocument!.getPage(1); // Get the first page
+        _pdfPageImage = await page.render(
+          width: page.width,
+          height: page.height,
+        );
+        await page.close();
+
+        setState(() {
+          if (isCourseRegistration) {
+            _courseRegistrationFile = file;
+            _coursePdfDocument = _pdfDocument;
+            _coursePdfPageImage = _pdfPageImage;
+          } else {
+            _timetableFile = file;
+            _timetalePdfDocument = _pdfDocument;
+            _timetablePageImage = _pdfPageImage;
+          }
+        });
+      } else {
+        // For non-PDF files (e.g., images), store them directly
+        setState(() {
+          if (isCourseRegistration) {
+            _courseRegistrationFile = file;
+          } else {
+            _timetableFile = file;
+          }
+        });
+      }
     }
   }
 
@@ -47,10 +80,10 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
     }
   }
 
-  void _skip() {
-    // Navigate to the next screen or perform any action on skip
-    Navigator.of(context).pushNamed(HomeScreen.routeName);
-  }
+  // void _skip() {
+  //   // Navigate to the next screen or perform any action on skip
+  //   Navigator.of(context).pushNamed(HomeScreen.routeName);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,24 +93,24 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        title: Text(
-          'WELCOME',
-          style: textTheme.titleLarge?.copyWith(
-              color: isLightTheme ? ExtraColors.black : ExtraColors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.w800),
-        ),
-        actions: [
-          TextButton(
-              onPressed: _skip,
-              child: Text(
-                'Skip',
-                style: textTheme.titleLarge?.copyWith(
-                    color: ExtraColors.blue,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
-              ))
-        ],
+        // title: Text(
+        //   'WELCOME',
+        //   style: textTheme.titleLarge?.copyWith(
+        //       color: isLightTheme ? ExtraColors.black : ExtraColors.white,
+        //       fontSize: 25,
+        //       fontWeight: FontWeight.w800),
+        // ),
+        // actions: [
+        //   TextButton(
+        //       onPressed: _skip,
+        //       child: Text(
+        //         'Skip',
+        //         style: textTheme.titleLarge?.copyWith(
+        //             color: ExtraColors.blue,
+        //             fontSize: 20,
+        //             fontWeight: FontWeight.w500),
+        //       ))
+        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -85,7 +118,6 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 32.0),
               Text(
                 'Course Registration Slip',
                 textAlign: TextAlign.center,
@@ -153,7 +185,7 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
                             height: MediaQuery.of(context).size.height / 5,
                             width: MediaQuery.of(context).size.width / 2,
                           )
-                        : const Icon(Icons.insert_drive_file),
+                        : Image.memory(_coursePdfPageImage!.bytes),
                   ],
                 ),
               const SizedBox(height: 32.0),
@@ -167,7 +199,21 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
               ),
               const SizedBox(height: 16.0),
               TButton(
-                onPressed: () => _pickDocument(false),
+                onPressed: () {
+                  if (_courseRegistrationFile == null) {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text(
+                                'Please upload a course registration file first.'),
+                          );
+                        });
+                  } else
+                    _pickDocument(false);
+                },
                 text: 'Upload',
                 icon: IconlyLight.upload,
                 isLightTheme: isLightTheme,
@@ -204,7 +250,21 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
                 ],
               ),
               TButton(
-                onPressed: () => _scanDocument(false),
+                onPressed: () {
+                  if (_courseRegistrationFile == null) {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text(
+                                'Please upload a course registration file first.'),
+                          );
+                        });
+                  } else
+                    _scanDocument(false);
+                },
                 text: 'Scan',
                 icon: IconlyLight.scan,
                 isLightTheme: isLightTheme,
@@ -225,11 +285,15 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
                             width: MediaQuery.of(context).size.width / 2,
                             fit: BoxFit.cover,
                           )
-                        : const Icon(Icons.insert_drive_file),
+                        : Image.memory(_timetablePageImage!.bytes)
                   ],
                 ),
               const SizedBox(height: 70.0),
-              Button(onPressed: () {}, text: 'Continue'),
+              Button(
+                  onPressed: () {
+                    // function to process images
+                  },
+                  text: 'Continue'),
               const SizedBox(height: 16.0),
               Text(
                 'The course registration slip and timetable will be used to help you schedule your personal timetable and customize your experience.',

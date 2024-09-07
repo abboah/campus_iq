@@ -1,5 +1,5 @@
 import 'package:campus_iq/features/authentication/presentation/providers/auth_providers.dart';
-import 'package:campus_iq/features/home_screen.dart';
+import 'package:campus_iq/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/themes/extra_colors.dart';

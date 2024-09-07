@@ -1,5 +1,6 @@
-import 'package:campus_iq/features/home_screen.dart';
-import 'package:campus_iq/features/notification/notification_screen.dart';
+import 'package:campus_iq/features/home/presentation/pages/home_screen.dart';
+import 'package:campus_iq/features/home/presentation/pages/notification_screen.dart';
+import 'package:campus_iq/features/home/presentation/pages/profile_screen.dart';
 import 'package:campus_iq/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:campus_iq/features/upload_docs/presentation/pages/upload_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class AppRoutes {
       HomeScreen.routeName: (context) => const HomeScreen(),
       UploadScanScreen.routeName: (conext) => const UploadScanScreen(),
       NotificationScreen.routeName: (context) => const NotificationScreen(),
+      ProfileScreen.routeName: (context) => const ProfileScreen(),
     };
   }
 }

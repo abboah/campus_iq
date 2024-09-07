@@ -20,6 +20,24 @@ class NotificationScreen extends StatelessWidget {
       Event(
           title: "Exam Reminder",
           description: "Don't forget your math exam tomorrow!"),
+      Event(
+          title: "New Class Added",
+          description: "Your schedule has been updated."),
+      Event(
+          title: "Exam Reminder",
+          description: "Don't forget your math exam tomorrow!"),
+      Event(
+          title: "New Class Added",
+          description: "Your schedule has been updated."),
+      Event(
+          title: "Exam Reminder",
+          description: "Don't forget your math exam tomorrow!"),
+      Event(
+          title: "New Class Added",
+          description: "Your schedule has been updated."),
+      Event(
+          title: "Exam Reminder",
+          description: "Don't forget your math exam tomorrow!"),
     ];
 
     return Scaffold(
@@ -35,7 +53,8 @@ class NotificationScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
         title: Text("Notification"),
-        backgroundColor: ExtraColors.transparent,
+        centerTitle: true,
+        elevation: 0,
         actions: [
           // IconButton(
           //   padding: const EdgeInsets.only(right: 20.0),

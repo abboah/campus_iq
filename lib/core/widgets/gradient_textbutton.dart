@@ -18,10 +18,11 @@ class Button extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: const LinearGradient(colors: [
-            Color.fromARGB(255, 31, 107, 255),
-            Color.fromARGB(153, 195, 37, 255)
-          ])),
+          // gradient: const LinearGradient(colors: [
+          //   Color.fromARGB(255, 31, 107, 255),
+          //   Color.fromARGB(153, 195, 37, 255)
+          // ])),
+          color: ExtraColors.buttonOutline),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

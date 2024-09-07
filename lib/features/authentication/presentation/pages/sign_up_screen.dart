@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/themes/extra_colors.dart';
-import '../../../home_screen.dart';
+import '../../../home/presentation/pages/home_screen.dart';
 import '../providers/auth_providers.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_textfield.dart';
@@ -35,7 +35,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Sign up successful!')));
-      Navigator.pushNamed(context, HomeScreen.routeName);
+      Navigator.pushNamed(context, SignInScreen.routeName);
       // Navigate to another screen if needed
     } catch (error) {
       ScaffoldMessenger.of(context)

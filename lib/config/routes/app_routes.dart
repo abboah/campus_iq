@@ -2,7 +2,7 @@ import 'package:campus_iq/features/home/presentation/pages/home_screen.dart';
 import 'package:campus_iq/features/home/presentation/pages/notification_screen.dart';
 import 'package:campus_iq/features/home/presentation/pages/profile_screen.dart';
 import 'package:campus_iq/features/onboarding/presentation/pages/onboarding_screen.dart';
-import 'package:campus_iq/features/upload_docs/presentation/pages/upload_screen.dart';
+import 'package:campus_iq/features/schedule/presentation/pages/upload_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/authentication/presentation/pages/forgot_password_screen.dart';

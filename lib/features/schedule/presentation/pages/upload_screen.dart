@@ -1,3 +1,4 @@
+import 'package:campus_iq/features/schedule/presentation/pages/confirm_tables_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
@@ -111,6 +112,40 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
         //             fontWeight: FontWeight.w500),
         //       ))
         // ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(0),
+        child:
+            // Column(
+            //   mainAxisSize: MainAxisSize.min,
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: <Widget>[
+            ListTile(
+          title: Button(
+              onPressed: () {
+                // function to process images
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => ConfirmCoursesScreen()));
+              },
+              text: 'Continue'),
+          subtitle: Text(
+            'The course registration slip and timetable will be used to setup notifications, schedule your personal timetable and customize your experience.',
+            style: textTheme.labelMedium?.copyWith(
+              color: isLightTheme ? ExtraColors.black : ExtraColors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        // const SizedBox(height: 16.0),
+        // Text(
+        //   'The course registration slip and timetable will be used to help you schedule your personal timetable and customize your experience.',
+        //   style: textTheme.labelMedium?.copyWith(
+        //     color: isLightTheme ? ExtraColors.black : ExtraColors.white,
+        //   ),
+        //   textAlign: TextAlign.center,
+        // ),
+        //   ],
+        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -289,19 +324,6 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
                   ],
                 ),
               const SizedBox(height: 70.0),
-              Button(
-                  onPressed: () {
-                    // function to process images
-                  },
-                  text: 'Continue'),
-              const SizedBox(height: 16.0),
-              Text(
-                'The course registration slip and timetable will be used to help you schedule your personal timetable and customize your experience.',
-                style: textTheme.labelMedium?.copyWith(
-                  color: isLightTheme ? ExtraColors.black : ExtraColors.white,
-                ),
-                textAlign: TextAlign.center,
-              ),
             ],
           ),
         ),

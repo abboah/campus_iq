@@ -1,5 +1,5 @@
 import 'package:campus_iq/core/themes/extra_colors.dart';
-import 'package:campus_iq/features/upload_docs/presentation/pages/upload_screen.dart';
+import 'package:campus_iq/features/schedule/presentation/pages/upload_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 

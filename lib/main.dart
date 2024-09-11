@@ -1,6 +1,7 @@
 import 'package:campus_iq/config/routes/app_routes.dart';
 import 'package:campus_iq/core/themes/theme.dart';
 import 'package:campus_iq/features/home/presentation/pages/home_screen.dart';
+import 'package:campus_iq/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

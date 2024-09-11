@@ -76,6 +76,7 @@ class _CourseItemState extends State<CourseItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: ListTile(
         title: isEditing

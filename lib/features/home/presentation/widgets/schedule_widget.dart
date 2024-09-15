@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'home_utils.dart';
+import 'notification_item_widget.dart';
 
 class TableEventsExample extends StatefulWidget {
   final Color color;
@@ -221,36 +222,16 @@ class TableEventsExampleState extends State<TableEventsExample> {
                   itemBuilder: (context, index) {
                     final event = value[index];
                     return Card(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                      ),
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 16.0),
-                        leading: Icon(
-                          IconlyLight.document,
-                          color: color,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 8.0,
                         ),
-                        title: Text(
-                          event.title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16.0),
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
-                        subtitle: Text(
-                          event.description,
-                          style: const TextStyle(fontSize: 14.0),
-                        ),
-                        onTap: () {
-                          // Implement notification or event detail logic here
-                          // ignore: avoid_print
-                          print('${event.title} - ${event.description}');
-                        },
-                      ),
-                    );
+                        child: NotificationItem(
+                          event: event,
+                        ));
                   },
                 );
               },

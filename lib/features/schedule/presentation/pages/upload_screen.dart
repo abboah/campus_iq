@@ -115,17 +115,26 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(0),
-        child:
-            // Column(
-            //   mainAxisSize: MainAxisSize.min,
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: <Widget>[
-            ListTile(
+        child: ListTile(
           title: Button(
               onPressed: () {
                 // function to process images
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ConfirmCoursesScreen()));
+                if (_timetableFile == null) {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content: Text(
+                              'Please upload course registration file and timetable to continue.'),
+                        );
+                      });
+                } else
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ConfirmCoursesScreen()));
               },
               text: 'Continue'),
           subtitle: Text(
@@ -136,16 +145,6 @@ class _UploadScanScreenState extends State<UploadScanScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        // const SizedBox(height: 16.0),
-        // Text(
-        //   'The course registration slip and timetable will be used to help you schedule your personal timetable and customize your experience.',
-        //   style: textTheme.labelMedium?.copyWith(
-        //     color: isLightTheme ? ExtraColors.black : ExtraColors.white,
-        //   ),
-        //   textAlign: TextAlign.center,
-        // ),
-        //   ],
-        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(

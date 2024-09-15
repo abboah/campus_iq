@@ -30,7 +30,7 @@ class BottomNavBarFb2 extends StatelessWidget {
                   selected: true,
                   onPressed: () {}),
               IconBottomBar(
-                  text: "Course Materials",
+                  text: "Courses",
                   icon: IconlyBold.discovery,
                   selected: false,
                   onPressed: () {}),
